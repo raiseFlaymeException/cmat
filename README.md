@@ -58,6 +58,12 @@ int main(int argc, char *argv[]) {
 
     // print the matrix
     CMat_print(&cmat3);
+
+    // output:
+    // --                     --
+    // | 140.000000 146.000000 |
+    // | 320.000000 335.000000 |
+    // --                     -- 
 }
 ```
 
