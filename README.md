@@ -31,35 +31,34 @@ the library is in the folder [src/include/](src/include/)
 I try to comment stuff in [main](#main) and in the library to make it easier
 
 ```c
-
-#define AT_SAME_TIME_IMPL // include the implementation (see stb style library:
-                          // https://github.com/nothings/stb)
-#include "at_same_time/at_same_time.h"
+// include the implementation (see stb style library:
+// https://github.com/nothings/stb)
+#define CMAT_IMPL
+#include "cmat.h"
 
 int main(int argc, char *argv[]) {
-    // init the library (will allocate memory using malloc)
-    AstAsync *async = AstAsync_init(CAPACITY_FUNCTION_ARRAY, SLEEP_TIME);
+    // create a 2x3 matrix
+    CMatType arr1[2][3] = {{1, 2, 3}, {4, 5, 6}};
+    CMat     cmat1      = CMat_from_2darr(arr1);
 
-    // register the function to be run asynchronously
-    AstPromise promise1 = AstAsync_register(async, func, &args1);
+    // create a 3x2 matrix
+    CMatType arr2[3][2] = {{10, 11}, {20, 21}, {30, 31}};
+    CMat     cmat2      = CMat_from_2darr(arr2);
 
-    // get the result and wait infinitly
-    size_t *result1 = AstAsync_get_result(async, promise1, NULL);
+    // create an uninitialized 2x2 matrix
+    CMatType arr3[2][2];
+    CMat     cmat3 = CMat_from_2darr(arr3);
 
-    // or 
+    // create a 2x2 matrix
+    CMatType arr_expected[2][2] = {{140, 146}, {320, 335}};
+    CMat     cmat_expected      = CMat_from_2darr(arr_expected);
 
-    // get the result and wait around 500 microseconds
-    // useconds_t timeout = 500; 
-    // size_t *result1 = AstAsync_get_result(async, promise1, &timeout);
+    // do a dot product between matrix 1 and matrix 2 and store the result in 3
+    CMat_dot(&cmat3, &cmat1, &cmat2);
 
-    // check if the function finished
-    printf("result1 finished: %s\n", (AstAsync_is_func_finished(async, promise1)) ? "true" : "false");
-
-    // deallocate memory and join every threads
-    AstAsync_quit(async);
-    return 0;
+    // print the matrix
+    CMat_print(&cmat3);
 }
-
 ```
 
 ## Example

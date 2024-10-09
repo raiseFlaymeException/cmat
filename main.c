@@ -54,7 +54,7 @@ void example_dot() {
 
     // create a 2x2 matrix
     CMatType arr_expected[2][2] = {{140, 146}, {320, 335}};
-    CMat     cmat_expected      = CMat_from_arr(arr_expected, 2, 2);
+    CMat     cmat_expected      = CMat_from_2darr(arr_expected);
 
     // do a dot product between matrix 1 and matrix 2 and store the result in 3
     CMat_dot(&cmat3, &cmat1, &cmat2);
