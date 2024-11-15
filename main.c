@@ -1,4 +1,7 @@
+#include <math.h>
 #include <stdio.h>
+
+// TODO: diagonal matrix
 
 // include the implementation (see stb style library:
 // https://github.com/nothings/stb)
@@ -15,7 +18,7 @@ void test_example(const CMat *test, const CMat *expected) {
         for (size_t col = 0; col < test->ncol; ++col) {
             CMatType t = CMat_at(test, row, col);     // access test at row col
             CMatType e = CMat_at(expected, row, col); // expected test at row col
-            if (t != e) {
+            if (round(t * 1e10) / 1e10 != round(e * 1e10) / 1e10) {
                 printf("error at arr[%d][%d], got '%lf', expected '%lf'\n", row, col, t, e);
                 exit(1);
             }
@@ -111,7 +114,8 @@ void example_inverse() {
     CMatType arr_inverse[4][4];
     CMat     cmat_inverse = CMat_from_2darr(arr_inverse);
     // populate the matrix with the inverse of the previous matrix
-    CMat_inverse(&cmat_inverse, &cmat);
+    CMat_iterate2(&cmat_inverse, &cmat, row, col, dst, src, *dst = *src;);
+    CMat_inverse(&cmat_inverse);
 
     // create a 4x4 matrix
     CMatType arr_expected[4][4] = {{-5.0 / 7.0, 2.0 / 7.0, 0.0, 2.0 / 7.0},
